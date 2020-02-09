@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Support\Basket\Basket;
+use App\Support\Basket\Contracts\BasketInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 
     /**

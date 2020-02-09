@@ -9,23 +9,43 @@
     namespace App\Support\Basket;
 
 
-    use App\Support\Basket\Contracts\BasketInterface;
+    use App\Order;
+    use App\Product;
+    use Illuminate\Support\Str;
 
-    class Basket implements BasketInterface
+
+    class Basket
     {
-
-        public function saveOrder()
+        public function update()
         {
-            // TODO: Implement saveOrder() method.
+
+        }
+        public function isProductExist(Product $product , $quantity)
+        {
+            return $product->stock >= (int)$quantity;
         }
 
-        public function getOrder()
+        public function saveOrder($userId , $amount , $productIdAndCount )
         {
-            // TODO: Implement getOrder() method.
+            $this->decreaseStock($productIdAndCount);
+            $order = Order::create([
+                'user_id' => $userId,
+                'code' => bin2hex(Str::random(12)),
+                'amount' => $amount,
+            ]);
+            $order->product()->attach($productIdAndCount);
+            return $order;
         }
 
-        public function delete()
+        public function decreaseStock($productIdAndCount)
         {
-            // TODO: Implement delete() method.
+            foreach ($productIdAndCount as $productId => $quantity){
+                $product = Product::find($productId);
+                $currentCount = $product->stock - $quantity['quantity'];
+                $product->stock = $currentCount;
+                $product->save();
+            }
+            return true;
         }
+
     }

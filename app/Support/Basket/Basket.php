@@ -16,10 +16,6 @@
 
     class Basket
     {
-        public function update()
-        {
-
-        }
         public function isProductExist(Product $product , $quantity)
         {
             return $product->stock >= (int)$quantity;

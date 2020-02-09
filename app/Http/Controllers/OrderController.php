@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Product;
 use App\Support\Basket\Basket;
-use App\Support\Basket\Contracts\BasketInterface;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller

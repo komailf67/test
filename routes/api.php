@@ -18,6 +18,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/products/insert-product', 'ProductsController@insertProduct');
-Route::post('/order/set-order', 'OrderController@setOrder');
-Route::post('/payment/online-payment/{order}', 'PaymentController@onlinePayment');
+//auth routes
+    Route::post('register', 'UserController@register');
+    Route::post('login', 'UserController@authenticate');
+    Route::get('open', 'DataController@open');
+
+    Route::group(['middleware' => ['jwt.verify']], function() {
+        Route::post('/products/insert-product', 'ProductsController@insertProduct');
+        Route::post('/order/set-order', 'OrderController@setOrder');
+        Route::post('/payment/online-payment/{order}', 'PaymentController@onlinePayment');
+    });
+
+//Route::post('/products/insert-product', 'ProductsController@insertProduct');
+//Route::post('/order/set-order', 'OrderController@setOrder');
+
+
